@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>The Shigging Chef</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+    <script src="https://www.gstatic.com/firebasejs/4.12.0/firebase.js"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="assets/javascript/jquery.fancybox.js"></script>
+
+  </head>
+  <body>
+
+    <section class="hero is-primary is-small">
+      <!-- Hero head: will stick at the top -->
+      <div class="hero-head">
+        <nav class="navbar">
+          <div class="container">
+            <div class="navbar-brand">
+              <a class="navbar-item" href="sd_index.html">
+                <img src="assets/images/shigginglogo.png" alt="Logo">
+              </a>
+              <span class="navbar-burger burger" onclick="document.querySelector('.navbar-menu').classList.toggle('is-active');" data-target="navbarMenuHeroA">
+                <span></span>
+                <span></span>
+                <span></span>
+              </span>
+            </div>
+            <div id="navbarMenuHeroA" class="navbar-menu">
+              <div class="navbar-end">
+                <a class="navbar-item">
+                  Your Shiggings
+                </a>
+                <a class="navbar-item">
+                  Top Shiggings
+                </a>
+                <a class="navbar-item">
+                  Random Shiggings
+                </a>
+              </div>
+            </div>
+          </div>
+        </nav>
+      </div>
+
+      <!-- Hero content: will be in the middle -->
+      <div class="hero-body">
+        <div class="container has-text-centered">
+          <h1 class="title">
+            The Shigging Chef
+          </h1>
+          <h2 class="subtitle">
+            because food
+          </h2> 
+
+        </section>
+
+
+      <!-- Email Signup -->
+      <section class="hero is-primary is-small">
+          <div class="container">
+      <div class="field">
+          <p class="control has-icons-left has-icons-right">
+            <input class="input" type="email" placeholder="Email">
+            <span class="icon is-small is-left">
+              <i class="fas fa-envelope"></i>
+            </span>
+            <span class="icon is-small is-right">
+              <i class="fas fa-check"></i>
+            </span>
+          </p>
+        </div>
+        <div class="field">
+          <p class="control has-icons-left">
+            <input class="input" type="password" placeholder="Password">
+            <span class="icon is-small is-left">
+              <i class="fas fa-lock"></i>
+            </span>
+          </p>
+        </div>
+        <div class="field">
+          <p class="control is-pulled-left">
+            <button class="button is-link is-outlined">
+              Login
+            </button>
+          </p>
+          <p class="control is-pulled-left">
+              <button class="button is-link is-outlined">
+                Sign Up
+              </button>
+            </p>
+            <p class="control is-pulled-left">
+                <button class="button is-link is-outlined">
+                  Logout
+                </button>
+              </p>
+              <br>
+              <br>
+        </div>
+        </div>
+        </section>
+      
+
+
+
+      <!--Search Form -->
+      <section class="hero is-primary is-small">
+          <div class="container">
+          <div class="field is-grouped">
+            <p class="control has-icons-left is-expanded">
+              <input class="input" id="keyword-input" type="text" type="submit" placeholder="Let's find something shigging delicious">
+                <span class="icon is-small is-left">
+                  <i class="fas fa-utensils"></i>
+                </span>
+            </p>
+          </div>
+          <div class="columns is-mobile">
+            <div class="column" id="searchButtons"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+      </section>
+
+    <!-- Youtube API display -->
+    <section class="hero is-primary">
+        <div class="container">
+      <div class="columns is-mobile">
+        <div class="column is-one-half is-offset-one-fifth" id="videos-view"></div>
+    <!-- Food API Display -->
+        <div class="column is-one-half" id="displayRecipe"></div>
+      </div>
+      <!-- previous buttons display -->
+      <div class="columns is-mobile">
+        <div class="column is one-half is-offset-one-fifth" id="buttons"></div>
+      </div>
+      </div>
+      </section>
+      <footer class="footer">
+          <div class="container">
+            <div class="content has-text-centered">
+              <p>
+                <strong>The Shigging Chef</strong> by <a href="https://jgthms.com">Caylene, Josh, Roarke, & Shane</a>.
+              </p>
+            </div>
+          </div>
+        </footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="assets/javascript/shigging.js"></script>
+  </body>
+</html>

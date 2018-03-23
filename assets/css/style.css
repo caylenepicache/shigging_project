@@ -1,0 +1,19 @@
+h1 {
+    font-size: 40px;
+}
+
+h3 {
+    font-size: 25px;
+}
+
+.fancybox-slide--iframe .fancybox-content {
+	width  : 800px;
+	height : 600px;
+	max-width  : 80%;
+	max-height : 80%;
+	margin: 0;
+<<<<<<< HEAD
+}
+=======
+}
+>>>>>>> cfc31e9187655ac417d267f3499a3b1609b900dc
