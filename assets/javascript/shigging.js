@@ -203,14 +203,8 @@ function showVideos(item) {
     var publishedAt = item.snippet.publishedAt;
 
     var result = '<li>' + 
-<<<<<<< HEAD
     '<div>' + 
     '<a data-fancybox data-type="iframe" href="http://www.youtube.com/embed/'+videoId+'"><img src="'+thumb+'"></a>' +
-=======
-    '<div class="list-left">' + 
-    // '<img ="'+thumb+'">' +
-    '<iframe> width="560" height="315" src="http://www.youtube.com/embed/'+videoId+'" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>'+
->>>>>>> 446473c2474b4fc5444a13754c9f7b160c4d4d8d
     '</div>' +
     '<div>' +
     '<h3><a data-fancybox data-type="iframe" href="http://www.youtube.com/embed/'+videoId+'">'+title+'</a></h3>' +
