@@ -29,6 +29,7 @@ var topics =[];
 
     var nextPageToken = data.nextPageToken;
     var prevPageToken = data.prevPageToken;
+    console.log(data)
 
     console.log("Response length: " + data.items.length)
     
@@ -202,17 +203,15 @@ function showVideos(item) {
     var publishedAt = item.snippet.publishedAt;
 
     var result = '<li>' + 
-    '<div class="list-left">' + 
-    // '<img ="'+thumb+'">' +
-    '<iframe> width="560" height="315" src="http://www.youtube.com/embed/'+videoId+'" frameborder="0" allow="autoplay;encrypted-media" allowfullscreen></iframe>'+
+    '<div>' + 
+    '<a data-fancybox data-type="iframe" href="http://www.youtube.com/embed/'+videoId+'"><img src="'+thumb+'"></a>' +
     '</div>' +
-    '<div class="list-right">' +
+    '<div>' +
     '<h3><a data-fancybox data-type="iframe" href="http://www.youtube.com/embed/'+videoId+'">'+title+'</a></h3>' +
     '<small>By <span class="cTitle">'+channelTitle+'</span> on '+publishedAt+'</small>' +
     '<p>'+description+'</p>' + 
     '</div>' +
-    '</li>' + 
-    '<div class="clearfix"></div>' + 
+    '</li>'
     '';
 
     return result;
@@ -237,6 +236,7 @@ $(".input").keypress(function(event) {
     event.preventDefault();
     // This line grabs the input from the textbox
     keyword = $("#keyword-input").val().trim();
+    keyword = keyword + " recipe";
     topics.push(keyword)
     // Initalizes function to immediately display the added button
     doAjaxCall();
