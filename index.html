@@ -11,6 +11,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="assets/javascript/jquery.fancybox.js"></script>
     <link rel="stylesheet" type="text/css" href="assets/css/jquery.fancybox.css">
+    <script src="https://www.gstatic.com/firebasejs/4.12.0/firebase.js"></script>
 
   </head>
   <body>
@@ -65,7 +66,7 @@
           <div class="container">
       <div class="field">
           <p class="control has-icons-left has-icons-right">
-            <input class="input" type="email" placeholder="Email">
+            <input class="input" id="txtEmail" type="email" placeholder="Email">
             <span class="icon is-small is-left">
               <i class="fas fa-envelope"></i>
             </span>
@@ -76,7 +77,7 @@
         </div>
         <div class="field">
           <p class="control has-icons-left">
-            <input class="input" type="password" placeholder="Password">
+            <input class="input" id="txtPassword" type="password" placeholder="Password">
             <span class="icon is-small is-left">
               <i class="fas fa-lock"></i>
             </span>
@@ -84,17 +85,17 @@
         </div>
         <div class="field">
           <p class="control is-pulled-left">
-            <button class="button is-link is-outlined">
+            <button class="button is-link is-outlined" id="btnLogin">
               Login
             </button>
           </p>
           <p class="control is-pulled-left">
-              <button class="button is-link is-outlined">
+              <button class="button is-link is-outlined" id="btnSignUp">
                 Sign Up
               </button>
             </p>
             <p class="control is-pulled-left">
-                <button class="button is-link is-outlined">
+                <button class="button is-link is-outlined hide" id="btnLogout">
                   Logout
                 </button>
               </p>

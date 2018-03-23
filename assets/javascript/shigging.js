@@ -3,6 +3,92 @@ var searchResults;
 var ingredientArray = [];
 var topics =[];
 
+// Initialize Firebase
+var config = {
+apiKey: "AIzaSyC_HsCc08nxb6JP0CyGZq3CxIJrhKsbplU",
+authDomain: "project-monarch-e3503.firebaseapp.com",
+databaseURL: "https://project-monarch-e3503.firebaseio.com",
+projectId: "project-monarch-e3503",
+storageBucket: "project-monarch-e3503.appspot.com",
+messagingSenderId: "181317180117"
+};
+firebase.initializeApp(config);
+
+var ref = new Firebase ("https://project-monarch-e3503.firebaseio.com/")
+var database = firebase.database();
+var userRef = database.ref();
+var newDataPoint = "";
+var user = "";
+var password = "";
+
+const txtEmail = document.getElementById('txtEmail');
+const txtPassword = document.getElementById('txtPassword');
+const btnLogin = document.getElementById('btnLogin');
+const btnSignUp = document.getElementById('btnSignUp');
+const btnLogout = document.getElementById('btnLogout');
+
+// Add login event
+btnLogin.addEventListener('click', e => {
+    // Get email and pass
+    const email = txtEmail.value;
+    const pass = txtPassword.value;
+    const auth = firebase.auth();
+
+    // Sign in
+    const promise = auth.signInWithEmailAndPassword(email, pass);
+    promise.catch(e => console.log(e.message));
+});
+
+// Add signup event
+btnSignUp,addEventListener('click', e => {
+    // Get email and pass
+    const email = txtEmail.value;
+    const pass = txtPassword.value;
+    const auth = firebase.auth();
+
+    // Sign in
+    const promise = auth.createUserWithEmailAndPassword(email, pass);
+    promise.catch(e => console.log(e.message));
+});
+
+btnLogout.addEventListener('click', e => {
+    firebase.auth().signOut();
+});
+
+// function writeUserData(email, password) {
+//     var userSep = email.split("@");
+//     firebase.database().ref('users/' + userSep[0]).set({
+//         password: password
+//     })
+// }
+
+// Add a realtime listener
+firebase.auth().onAuthStateChanged(firebaseUser => {
+    
+    ref.onAuth(function(authData) {
+    if (firebaseUser) {
+        ref.child("users").child(authData.uid).set({
+            provider: "some provider",
+            name: getName(authData)
+        });
+        // console.log(firebaseUser);
+        // btnLogout.classList.remove('hide');
+        // user = $("#txtEmail").val();
+        // password = $("#txtPassword").val();
+
+        // var userSep = user.split("@");
+        // firebase.database().ref('users/' + userSep[0]).set({
+        //     password: password
+        // });
+    }
+
+    else {
+        console.log('not logged in')
+        btnLogout.classList.add('hide');
+    }
+});
+
+});
 
   function doAjaxCall() {
     // Handles call to Youtube API
