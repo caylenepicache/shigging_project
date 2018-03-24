@@ -18,7 +18,7 @@ var keyword ="";
 var searchResults;
 var ingredientArray = [];
 var topics =[];
-var searchHistory;
+var searchHistory= [];
 
 
 
