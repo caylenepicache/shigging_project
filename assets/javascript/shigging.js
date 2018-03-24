@@ -68,6 +68,7 @@ firebase.auth().onAuthStateChanged(firebaseUser => {
         user = $("#txtEmail").val();
         password = $("#txtPassword").val();
         userSep = user.split("@");
+<<<<<<< HEAD
         database.ref('/users/' + uid).once('value').then(function(snap) {
             let userObj = snap.val();
             userObj.history = searchHistory;
@@ -76,6 +77,11 @@ firebase.auth().onAuthStateChanged(firebaseUser => {
         // firebase.database().ref().child("users/" + userSep[0]);
         // firebase.database().ref('users/' + userSep[0]).push({
         //     password: password
+=======
+        firebase.database().ref().child("users");
+        firebase.database().ref('users/' + userSep[0]).push({
+            password: password
+>>>>>>> db872dc32aecd5a54119ef27c9a0447068c822f4
         });
 
     }
