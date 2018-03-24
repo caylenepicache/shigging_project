@@ -19,6 +19,7 @@ var searchResults;
 var ingredientArray = [];
 var topics =[];
 var searchHistory=[];
+var userSep = "";
 
 //   Get elements
 
@@ -64,7 +65,7 @@ firebase.auth().onAuthStateChanged(firebaseUser => {
         btnLogout.classList.remove('hide');
         user = $("#txtEmail").val();
         password = $("#txtPassword").val();
-        var userSep = user.split("@");
+        userSep = user.split("@");
         firebase.database().ref().child("users");
         firebase.database().ref('users/' + userSep[0]).set({
             password: password
@@ -103,9 +104,10 @@ function doAjaxCall() {
     searchHistory.push(keyword);
     
     var userData = {history: searchHistory};
-    var updates = {};
-    updates['/users/' + user] = userData
-    firebase.database().ref().update(updates)
+    var newHistory = {};
+    newHistory['/users/' + userSep[0]] = userData
+    console.log(userSep[0]);
+    firebase.database().ref().update(newHistory);
 
     $.ajax({
       url: url,
