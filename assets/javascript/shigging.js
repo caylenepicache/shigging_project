@@ -63,7 +63,7 @@ btnLogout.addEventListener('click', e => {
 // Add a realtime listener
 firebase.auth().onAuthStateChanged(firebaseUser => {
     if (firebaseUser) {
-        console.log(firebaseUser);
+        console.log(firebaseUser.uid);
         btnLogout.classList.remove('hide');
         user = $("#txtEmail").val();
         password = $("#txtPassword").val();
