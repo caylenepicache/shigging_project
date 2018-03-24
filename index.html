@@ -7,16 +7,18 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
     <script src="https://www.gstatic.com/firebasejs/4.12.0/firebase.js"></script>
     <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
-    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="assets/javascript/jquery.fancybox.js"></script>
     <link rel="stylesheet" type="text/css" href="assets/css/jquery.fancybox.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:700" rel="stylesheet">
+
 
 
   </head>
   <body>
 
-    <section class="hero is-light is-medium" id="heroImage">
+    <section class="hero is-light is-large" id="heroImage">
       <!-- Hero head: will stick at the top -->
       <div class="hero-head">
         <nav class="navbar">
@@ -36,7 +38,7 @@
                   <div class="dropdown" onclick="document.querySelector('.dropdown').classList.toggle('is-active');">
                       <div class="dropdown-trigger">
                         <button class="button" aria-haspopup="true" aria-controls="dropdown-menu">
-                          <span>Your History</span>
+                          <span>Your Shiggings</span>
                           <span class="icon is-small">
                             <i class="fas fa-angle-down" aria-hidden="true"></i>
                           </span>
@@ -71,21 +73,28 @@
 
       <!-- Hero content: will be in the middle -->
       <div class="hero-body">
-        <div class="container has-text-centered">
+        <div class="container has-text-centered" id="titleColor">
           <h1 class="title">
-            The Shigging Chef
+            <strong>The Shigging Chef</strong>
           </h1>
           <h2 class="subtitle">
-            because food
-          </h2> 
-
+            <strong><i>v. </i>standing next to a cook with the intentions of stealing their cooking techniques
+            </strong>
+          </h2>
         </section>
 
 
       <!-- Email Signup -->
       <section class="hero is-light is-small">
+        <div class="container">
+          <div class="column">
+            <p>Lorem ipsum dolor amet cloud bread dreamcatcher chartreuse, subway tile occupy enamel pin chia intelligentsia cliche plaid celiac glossier shoreditch venmo. Retro pitchfork leggings health goth cloud bread. Selfies letterpress craft beer knausgaard banh mi seitan. Fixie hella cronut, kinfolk vaporware migas poke you probably haven't heard of them 90's viral swag bespoke next level marfa. Portland vape fingerstache echo park, marfa church-key beard la croix.</p>
+          </div>
+        </div>
           <div class="container">
       <div class="field">
+          <div class="level-left">
+              <div class="level-item">
           <p class="control has-icons-left has-icons-right">
             <input class="input" id="txtEmail" type="email" placeholder="Email">
             <span class="icon is-small is-left">
@@ -104,24 +113,31 @@
             </span>
           </p>
         </div>
+        </div>
+        </div>
+
+
+          <div class="level-left">
+              <div class="level-item">
         <div class="field">
           <p class="control is-pulled-left">
-            <button class="button is-link is-outlined" id="btnLogin">
+            <button class="button is-outlined" id="btnLogin">
               Login
             </button>
           </p>
           <p class="control is-pulled-left">
-              <button class="button is-link is-outlined" id="btnSignUp">
+              <button class="button is-outlined" id="btnSignUp">
                 Sign Up
               </button>
             </p>
             <p class="control is-pulled-left">
-                <button class="button is-link is-outlined hide" id="btnLogout">
+                <button class="button is-outlined hide" id="btnLogout">
                   Logout
                 </button>
               </p>
               <br>
               <br>
+        </div>
         </div>
         </div>
         </section>
