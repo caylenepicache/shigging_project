@@ -82,18 +82,22 @@ firebase.auth().onAuthStateChanged(firebaseUser => {
 
 function doAjaxButton() {
 
+    console.log("im here");
+
     // Sends data to database
-    
+    var thisDataButton = $(this).attr("data-name");
+    console.log(thisDataButton);
 
     // Handles call to Youtube API
-    $("#videos-view").empty(); //empty the button or dropdown menu
-    //$("#displayRecipe").empty();
-    //$("#buttons").empty();
+    $("#videos-view").empty();
+    $("#displayRecipe").empty();
+    $("#buttons").empty();
+    $(".dropdown-content").empty();
 
     var params = $.param({
         part: 'snippet, id',
         maxResults: '1',
-        q: keyword,
+        q: thisDataButton,
         type: 'video',    
         key: 'AIzaSyBbcLfQsPms45781ZJd_5pwv-V3sj6G9C0'
     });
@@ -139,7 +143,7 @@ $("#displayRecipe").empty();
 var recipeInput = keyword;
 var corsProxy = "https://cors-anywhere.herokuapp.com/";
 var baseURL = "http://api.yummly.com/v1/api/recipes?_app_id=87b4ae84&_app_key=1c317fe13d2c932506f2c1aab86f67b6&q=";
-var queryURL =  corsProxy + baseURL + recipeInput;
+var queryURL =  corsProxy + baseURL + thisDataButton;
 var corsProxy = "https://cors-anywhere.herokuapp.com/";
 console.log(queryURL);
 
@@ -295,13 +299,16 @@ function makeButtons() {
     for (var i = 0; i < snapshot.val().history.length; i++) {
         var a = $('<a>' + snapshot.val().history[i] + '</a>');
             a.addClass("dropdown-item");
-            a.attr("data-name", history[i]);
+            a.attr("data-name", snapshot.val().history[i]);
             console.log(snapshot.val().history[i]);
-            a.text(history[i]);
+            a.text(snapshot.val().history[i]);
             $(".dropdown-content").append(a);
     }
 })
 }
+
+    $(document).on("click", ".dropdown-item", doAjaxButton);
+
 
 function showPrevPage() {
     var token = $("#prev-button").data('token');
