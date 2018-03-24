@@ -69,7 +69,7 @@ btnLogout.addEventListener('click', e => {
 
 // Add a realtime listener
 firebase.auth().onAuthStateChanged(firebaseUser => {
-    if (firebaseUser.ka) {
+    if (firebaseUser) {
         // console.log(firebaseUser.ka.uid);
         // var userUID = firebaseUser.ka.uid;
         btnLogout.classList.remove('hide');
