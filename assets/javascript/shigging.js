@@ -18,8 +18,14 @@ var keyword ="";
 var searchResults;
 var ingredientArray = [];
 var topics =[];
+var userUID = firebaseUser.ka.uid;
+
+database.ref('/users/' + userUID).once('value').then(function(snap) {console.log(snap.val().history)})
+
+
 var searchHistory=[];
 var userSep = [];
+
 
 //   Get elements
 
@@ -63,7 +69,8 @@ btnLogout.addEventListener('click', e => {
 // Add a realtime listener
 firebase.auth().onAuthStateChanged(firebaseUser => {
     if (firebaseUser) {
-        console.log(firebaseUser.uid);
+        console.log(firebaseUser.ka.uid);
+        // var userUID = firebaseUser.ka.uid;
         btnLogout.classList.remove('hide');
         user = $("#txtEmail").val();
         password = $("#txtPassword").val();
