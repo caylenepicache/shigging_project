@@ -79,6 +79,111 @@ firebase.auth().onAuthStateChanged(firebaseUser => {
     }
 });
 
+
+function doAjaxButton() {
+
+    // Sends data to database
+    
+
+    // Handles call to Youtube API
+    $("#videos-view").empty(); //empty the button or dropdown menu
+    //$("#displayRecipe").empty();
+    //$("#buttons").empty();
+
+    var params = $.param({
+        part: 'snippet, id',
+        maxResults: '1',
+        q: keyword,
+        type: 'video',    
+        key: 'AIzaSyBbcLfQsPms45781ZJd_5pwv-V3sj6G9C0'
+    });
+    var url = "https://www.googleapis.com/youtube/v3/search?" + params;
+    console.log(url);
+
+    q = $(".input").val();
+
+    searchHistory.push(keyword);
+    
+    var userData = {history: searchHistory};
+    var newHistory = {};
+    newHistory['/users/' + userSep[0]] = userData
+    console.log(userSep[0]);
+    firebase.database().ref().update(newHistory);
+
+    $.ajax({
+      url: url,
+      method: "GET"
+    }).then(function(data) {
+
+    var nextPageToken = data.nextPageToken;
+    var prevPageToken = data.prevPageToken;
+    console.log(data)
+
+    console.log("Response length: " + data.items.length)
+    
+    $.each(data.items, function(i, item){ 
+
+        var result = showVideos(item);
+
+        $("#videos-view").append(result)
+    });
+
+    var buttons = showButtons(prevPageToken, nextPageToken);
+
+    $("#buttons").append(buttons);
+
+});
+// Handles ajax call to recipe API
+$("#displayRecipe").empty();
+
+var recipeInput = keyword;
+var corsProxy = "https://cors-anywhere.herokuapp.com/";
+var baseURL = "http://api.yummly.com/v1/api/recipes?_app_id=87b4ae84&_app_key=1c317fe13d2c932506f2c1aab86f67b6&q=";
+var queryURL =  corsProxy + baseURL + recipeInput;
+var corsProxy = "https://cors-anywhere.herokuapp.com/";
+console.log(queryURL);
+
+$.ajax({
+    url: queryURL,
+    method: "GET"
+}).then(function(response){
+  console.log(response);
+
+  var newDiv = $("<div>");
+  newDiv.addClass("addedDiv");
+  $("#displayRecipe").append(newDiv);
+  
+
+var recipeTitle = response.matches[0].recipeName;
+console.log(recipeTitle);
+newDiv.append("<h1>" + recipeTitle + "</h1>");
+
+var ingredientArray = response.matches[0].ingredients;
+console.log(ingredientArray);
+
+var ingredientTitleString = "Ingredients";
+newDiv.append("<h3>" + ingredientTitleString + "</h3>");
+
+for (i = 0; i < ingredientArray.length; i++){
+    var recipeIngredients = JSON.stringify(response.matches[0].ingredients[i]);
+    recipeIngredients = recipeIngredients.replace('[',' ');
+    recipeIngredients = recipeIngredients.replace(']',' ');
+    recipeIngredients = recipeIngredients.replace(/["]+/g,' ');
+    newDiv.append(recipeIngredients + "<br>");
+    
+}
+
+console.log(recipeIngredients);
+$("#displayRecipe").append(newDiv); 
+
+});
+
+makeButtons();
+};
+
+
+
+
 function doAjaxCall() {
 
     // Sends data to database
@@ -181,15 +286,21 @@ makeButtons();
 };
 
 function makeButtons() {
-    $("#searchButtons").empty();
+    $(".dropdown-content").empty();
 
-    for (var i = 0; i < topics.length; i++) {
-        var a = $('<button>');
-            a.addClass("image-button");
-            a.attr("data-name", topics[i]);
-            a.text(topics[i]);
-            $("#searchButtons").append(a);
+    var historyRef = firebase.database().ref();
+    historyRef.on("child_added",function(snapshot){
+
+
+    for (var i = 0; i < snapshot.val().history.length; i++) {
+        var a = $('<a>' + snapshot.val().history[i] + '</a>');
+            a.addClass("dropdown-item");
+            a.attr("data-name", history[i]);
+            console.log(snapshot.val().history[i]);
+            a.text(history[i]);
+            $(".dropdown-content").append(a);
     }
+})
 }
 
 function showPrevPage() {
