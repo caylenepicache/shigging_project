@@ -69,11 +69,12 @@ firebase.auth().onAuthStateChanged(firebaseUser => {
         password = $("#txtPassword").val();
         search = $(".input").val();
         userSep = user.split("@");
-        firebase.database().ref().child("users");
-        firebase.database().ref('users/' + userSep[0]).push({
-            password: password,
-            user: user,
-            search: search
+
+        database.ref('/users/' + uid).once('value').then(function(snap) {
+            let userObj = snap.val();
+            userObj.history = searchHistory;
+            database.ref('/users/' + snap.key).update(userObj)
+
         });
 
     }
@@ -114,8 +115,10 @@ function doAjaxButton() {
     searchHistory.push(keyword);
     
     var userData = {history: searchHistory};
+    
+    var newUserKey = firebase.database().ref().child().push();
     var newHistory = {};
-    newHistory['/users/' + userSep[0]] = userData
+    newHistory['/users/' + userSep[0] + '/' + newUserKey ] = userData
     console.log(userSep[0]);
     firebase.database().ref().update(newHistory);
 
