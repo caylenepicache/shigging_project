@@ -67,7 +67,8 @@ firebase.auth().onAuthStateChanged(firebaseUser => {
 
     console.log(firebaseUser);
     console.log(firebaseUser.ka.uid);
-    
+    userUID = firebaseUser.ka.uid;
+
     if (firebaseUser) {
         console.log(firebaseUser);
         console.log(firebaseUser.ka.uid);
@@ -77,7 +78,7 @@ firebase.auth().onAuthStateChanged(firebaseUser => {
         password = $("#txtPassword").val();
         search = $(".input").val();
         userSep = user.split("@");
-        userUID = firebaseUser.ka.uid;
+        //userUID = firebaseUser.ka.uid;
         database.ref('/users/' + userUID).once('value').then(function(snap) {console.log(snap.val().history)
             searchHistory= snap.val().history;
         
