@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>The Shigging Chef</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+    <script src="https://www.gstatic.com/firebasejs/4.12.0/firebase.js"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="assets/javascript/jquery.fancybox.js"></script>
+    <link rel="stylesheet" type="text/css" href="assets/css/jquery.fancybox.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:700" rel="stylesheet">
+  </head>
+  <body>
+
+        <section class="hero is-light is-large" id="heroImage">
+          <!-- Hero head: will stick at the top -->
+          <div class="hero-head">
+            <nav class="navbar">
+              <div class="container">
+                <div class="navbar-brand">
+                  <a class="navbar-item" href="index.html">
+                    <img src="assets/images/shigginglogo.png" alt="Logo">
+                  </a>
+                  <span class="navbar-burger burger" onclick="document.querySelector('.navbar-menu').classList.toggle('is-active');" data-target="navbarMenuHeroA">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                  </span>
+                </div>
+                <div id="navbarMenuHeroA" class="navbar-menu">
+                  <div class="navbar-end">
+                      <div class="dropdown" onclick="document.querySelector('.dropdown').classList.toggle('is-active');">
+                          <div class="dropdown-trigger">
+                            <button class="button" aria-haspopup="true" aria-controls="dropdown-menu">
+                              <span>Your Shiggings</span>
+                              <span class="icon is-small">
+                                <i class="fas fa-angle-down" aria-hidden="true"></i>
+                              </span>
+                            </button>
+                          </div>
+                          <div class="dropdown-menu" id="dropdown-menu" role="menu">
+                            <div class="dropdown-content">
+                              <a href="#" class="dropdown-item">
+                                Dropdown item
+                              </a>
+                              <a class="dropdown-item">
+                                Other dropdown item
+                              </a>
+                              <a href="#" class="dropdown-item is-active">
+                                Active dropdown item
+                              </a>
+                              <a href="#" class="dropdown-item">
+                                Other dropdown item
+                              </a>
+                              <hr class="dropdown-divider">
+                              <a href="#" class="dropdown-item">
+                                With a divider
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                  </div>
+                </div>
+              </div>
+            </nav>
+          </div>
+    
+          <!-- Hero content: will be in the middle -->
+          <div class="hero-body">
+            <div class="container has-text-centered" id="titleColor">
+              <h1 class="title">
+                <strong>The Shigging Chef</strong>
+              </h1>
+              <h2 class="subtitle" id="definition">
+                <strong><i>v. </i>standing next to a cook with the intentions of stealing their cooking techniques
+                </strong>
+              </h2>
+              <div class="container">
+                  <div class="level">
+                      <div class="level-item">
+                            <div class="field is-grouped">
+                                <div class="level-left">
+                                <div class="level-item">
+                                <p class="control is-expanded has-icons-left has-icons-right">
+                                <input class="input" id="txtEmail" type="email" placeholder="Email">
+                                <span class="icon is-small is-left">
+                                <i class="fas fa-envelope"></i>
+                                </span>
+                                <span class="icon is-small is-right">
+                            <i class="fas fa-check"></i>
+                          </span>
+                        </p>
+                      </div>
+                      </div>
+                      <div class="level-item">
+                      <div class="field is-grouped">
+                        <p class="control is-expanded has-icons-left">
+                          <input class="input" id="txtPassword" type="password" placeholder="Password">
+                          <span class="icon is-small is-left">
+                            <i class="fas fa-lock"></i>
+                          </span>
+                        </p>
+                      </div>
+                      </div>
+                      </div>
+                      <div class="level-left">
+                          </div>
+                            <div class="level-item">
+                      <div class="field is-grouped">
+                        <p class="control is-grouped">
+                          <button class="button is-outlined" id="btnLogin">
+                            Login
+                          </button>
+                        </p>
+                        <p class="control is-grouped">
+                            <button class="button is-outlined" id="btnSignUp">
+                              Sign Up
+                            </button>
+                          </p>
+                          <p class="control is-grouped">
+                              <button class="button is-outlined hide" id="btnLogout">
+                                Logout
+                              </button>
+                            </p>
+                            <br>
+                            <br>
+                      </div>
+                      </div>
+                      </div>
+                      </div>
+            </section>
+            <footer class="footer">
+                    <div class="container">
+                      <div class="content has-text-centered">
+                        <p>
+                          <strong>The Shigging Chef</strong> by <a href="https://jgthms.com">Caylene, Josh, Roarke, & Shane</a>.
+                        </p>
+                      </div>
+                    </div>
+                  </footer>
+              <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+              <script src="https://www.gstatic.com/firebasejs/4.12.0/firebase.js"></script>
+              <script src="assets/javascript/shigging.js"></script>
+              <!-- <script src="assets/javascript/firebase-database.js"></script> -->
+            </body>
+          </html>
+          
