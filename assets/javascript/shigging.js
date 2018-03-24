@@ -67,7 +67,7 @@ firebase.auth().onAuthStateChanged(firebaseUser => {
         password = $("#txtPassword").val();
         userSep = user.split("@");
         firebase.database().ref().child("users");
-        firebase.database().ref('users/' + userSep[0]).set({
+        firebase.database().ref('users/' + userSep[0]).push({
             password: password
         });
 
