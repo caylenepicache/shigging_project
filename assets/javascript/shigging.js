@@ -69,7 +69,7 @@ firebase.auth().onAuthStateChanged(firebaseUser => {
     //console.log(firebaseUser.ka);
     console.log(firebaseUser.uid);
     //console.log(firebaseUser.uid);
-    //userUID = firebaseUser.ka.uid;
+    userUID = firebaseUser.uid;
 
     if (firebaseUser) {
         //console.log(firebaseUser);
