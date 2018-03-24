@@ -14,13 +14,13 @@
   </head>
   <body>
 
-    <section class="hero is-primary is-small">
+    <section class="hero is-light is-medium" id="heroImage">
       <!-- Hero head: will stick at the top -->
       <div class="hero-head">
         <nav class="navbar">
           <div class="container">
             <div class="navbar-brand">
-              <a class="navbar-item" href="sd_index.html">
+              <a class="navbar-item" href="index.html">
                 <img src="assets/images/shigginglogo.png" alt="Logo">
               </a>
               <span class="navbar-burger burger" onclick="document.querySelector('.navbar-menu').classList.toggle('is-active');" data-target="navbarMenuHeroA">
@@ -31,15 +31,36 @@
             </div>
             <div id="navbarMenuHeroA" class="navbar-menu">
               <div class="navbar-end">
-                <a class="navbar-item">
-                  Your Shiggings
-                </a>
-                <a class="navbar-item">
-                  Top Shiggings
-                </a>
-                <a class="navbar-item">
-                  Random Shiggings
-                </a>
+                  <div class="dropdown" onclick="document.querySelector('.dropdown').classList.toggle('is-active');">
+                      <div class="dropdown-trigger">
+                        <button class="button" aria-haspopup="true" aria-controls="dropdown-menu">
+                          <span>Your History</span>
+                          <span class="icon is-small">
+                            <i class="fas fa-angle-down" aria-hidden="true"></i>
+                          </span>
+                        </button>
+                      </div>
+                      <div class="dropdown-menu" id="dropdown-menu" role="menu">
+                        <div class="dropdown-content">
+                          <a href="#" class="dropdown-item">
+                            Dropdown item
+                          </a>
+                          <a class="dropdown-item">
+                            Other dropdown item
+                          </a>
+                          <a href="#" class="dropdown-item is-active">
+                            Active dropdown item
+                          </a>
+                          <a href="#" class="dropdown-item">
+                            Other dropdown item
+                          </a>
+                          <hr class="dropdown-divider">
+                          <a href="#" class="dropdown-item">
+                            With a divider
+                          </a>
+                        </div>
+                      </div>
+                    </div>
               </div>
             </div>
           </div>
@@ -60,7 +81,7 @@
 
 
       <!-- Email Signup -->
-      <section class="hero is-primary is-small">
+      <section class="hero is-light is-small">
           <div class="container">
       <div class="field">
           <p class="control has-icons-left has-icons-right">
@@ -107,7 +128,7 @@
 
 
       <!--Search Form -->
-      <section class="hero is-primary is-small">
+      <section class="hero is-light is-small">
           <div class="container">
           <div class="field is-grouped">
             <p class="control has-icons-left is-expanded">
@@ -126,7 +147,7 @@
       </section>
 
     <!-- Youtube API display -->
-    <section class="hero is-primary">
+    <section class="hero is-light">
         <div class="container">
       <div class="columns is-mobile">
         <div class="column is-one-half is-offset-one-fifth" id="videos-view"></div>
