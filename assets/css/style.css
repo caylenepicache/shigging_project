@@ -22,3 +22,12 @@ h3 {
 #videos-view {
 	list-style: none;
 }
+
+.hero.is-light {
+	padding-top: 10px;
+}
+
+#navbarMenuHeroA {
+	background: rgba(1, 1, 1, 0);
+
+}
