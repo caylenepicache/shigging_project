@@ -83,8 +83,8 @@ firebase.auth().onAuthStateChanged(firebaseUser => {
         //userUID = firebaseUser.ka.uid;
 
         console.log(searchHistory);
-        
-        database.ref('/users/' + userUID).once('value').then(function(snap) {console.log(snap.val().history)
+
+        database.ref('/users/' + userUID).once('value').then(function(snap) {           console.log(snap.val().history);
             searchHistory= snap.val().history;
         
         })
