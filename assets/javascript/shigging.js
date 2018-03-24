@@ -89,7 +89,7 @@ firebase.auth().onAuthStateChanged(firebaseUser => {
         
         })
 
-        database.ref('/users/' + userSep[0]).once('value').then(function(snap) {
+        database.ref('/users/' + 8[0]).once('value').then(function(snap) {
             let userObj = snap.val();
             userObj.history = searchHistory;
             database.ref('/users/' + snap.key).update(userObj)
@@ -242,6 +242,7 @@ function doAjaxCall() {
     
     var userData = {history: searchHistory};
     console.log(userData);
+    console.log(userData.history);
     var newHistory = {};
     newHistory['/users/' + userSep[0]] = userData
     console.log(userSep[0]);
