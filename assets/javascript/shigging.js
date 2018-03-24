@@ -23,7 +23,7 @@ var userUID = firebaseUser.ka.uid;
 database.ref('/users/' + userUID).once('value').then(function(snap) {console.log(snap.val().history)})
 
 
-var searchHistory=[];
+var searchHistory= snap.val().history;
 var userSep = [];
 
 
