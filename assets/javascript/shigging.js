@@ -69,15 +69,15 @@ btnLogout.addEventListener('click', e => {
 
 // Add a realtime listener
 firebase.auth().onAuthStateChanged(firebaseUser => {
-    if (firebaseUser) {
-        console.log(firebaseUser.ka.uid);
+    if (firebaseUser.ka) {
+        // console.log(firebaseUser.ka.uid);
         // var userUID = firebaseUser.ka.uid;
         btnLogout.classList.remove('hide');
         user = $("#txtEmail").val();
         password = $("#txtPassword").val();
         search = $(".input").val();
         userSep = user.split("@");
-        userUID = firebaseUser.ka.uid;
+        userUID = firebasUser.ka.uid;
         database.ref('/users/' + userUID).once('value').then(function(snap) {console.log(snap.val().history)
             searchHistory= snap.val().history;
         
