@@ -20,11 +20,6 @@ var ingredientArray = [];
 var topics =[];
 var searchHistory= [];
 var userUID;
-
-
-
-
-
 var userSep = [];
 
 
@@ -69,9 +64,13 @@ btnLogout.addEventListener('click', e => {
 
 // Add a realtime listener
 firebase.auth().onAuthStateChanged(firebaseUser => {
+
+    console.log(firebaseUser);
+    console.log(firebaseUser.ka.uid);
+    
     if (firebaseUser) {
-        console.log(firebaseUser.ka.uid);
         console.log(firebaseUser);
+        console.log(firebaseUser.ka.uid);
         // var userUID = firebaseUser.ka.uid;
         btnLogout.classList.remove('hide');
         user = $("#txtEmail").val();
