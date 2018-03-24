@@ -19,7 +19,7 @@ var searchResults;
 var ingredientArray = [];
 var topics =[];
 var searchHistory=[];
-var userSep = "";
+var userSep = [];
 
 //   Get elements
 
@@ -55,6 +55,8 @@ btnSignUp,addEventListener('click', e => {
 
 btnLogout.addEventListener('click', e => {
     firebase.auth().signOut();
+    userSep = [];
+
 });
 
 
@@ -299,9 +301,9 @@ function makeButtons() {
     for (var i = 0; i < snapshot.val().history.length; i++) {
         var a = $('<a>' + snapshot.val().history[i] + '</a>');
             a.addClass("dropdown-item");
-            a.attr("data-name", snapshot.val().history[i]);
-            console.log(snapshot.val().history[i]);
-            a.text(snapshot.val().history[i]);
+            a.attr("data-name", snapshot.val().userSep[0].history[i]);
+            console.log(snapshot.val().userSep[0].history[i]);
+            a.text(snapshot.val().userSep[0].history[i]);
             $(".dropdown-content").append(a);
     }
 })
