@@ -1,10 +1,89 @@
+ // Initialize Firebase
+ var config = {
+    apiKey: "AIzaSyC_HsCc08nxb6JP0CyGZq3CxIJrhKsbplU",
+    authDomain: "project-monarch-e3503.firebaseapp.com",
+    databaseURL: "https://project-monarch-e3503.firebaseio.com",
+    projectId: "project-monarch-e3503",
+    storageBucket: "project-monarch-e3503.appspot.com",
+    messagingSenderId: "181317180117"
+  };
+  firebase.initializeApp(config);
+
+var database = firebase.database();
+var userRef = database.ref();
+var newDataPoint = "";
+var user = "";
+var password = "";
 var keyword ="";
 var searchResults;
 var ingredientArray = [];
 var topics =[];
+var searchHistory=[];
+var userSep = "";
+
+//   Get elements
+
+const txtEmail = document.getElementById('txtEmail');
+const txtPassword = document.getElementById('txtPassword');
+const btnLogin = document.getElementById('btnLogin');
+const btnSignUp = document.getElementById('btnSignUp');
+const btnLogout = document.getElementById('btnLogout');
+
+// Add login event
+btnLogin.addEventListener('click', e => {
+    // Get email and pass
+    const email = txtEmail.value;
+    const pass = txtPassword.value;
+    const auth = firebase.auth();
+
+    // Sign in
+    const promise = auth.signInWithEmailAndPassword(email, pass);
+    promise.catch(e => console.log(e.message));
+});
+
+// Add signup event
+btnSignUp,addEventListener('click', e => {
+    // Get email and pass
+    const email = txtEmail.value;
+    const pass = txtPassword.value;
+    const auth = firebase.auth();
+
+    // Sign in
+    const promise = auth.createUserWithEmailAndPassword(email, pass);
+    promise.catch(e => console.log(e.message));
+});
+
+btnLogout.addEventListener('click', e => {
+    firebase.auth().signOut();
+});
 
 
-  function doAjaxCall() {
+// Add a realtime listener
+firebase.auth().onAuthStateChanged(firebaseUser => {
+    if (firebaseUser) {
+        console.log(firebaseUser);
+        btnLogout.classList.remove('hide');
+        user = $("#txtEmail").val();
+        password = $("#txtPassword").val();
+        userSep = user.split("@");
+        firebase.database().ref().child("users");
+        firebase.database().ref('users/' + userSep[0]).set({
+            password: password
+        });
+
+    }
+
+    else {
+        console.log('not logged in')
+        btnLogout.classList.add('hide');
+    }
+});
+
+function doAjaxCall() {
+
+    // Sends data to database
+    
+
     // Handles call to Youtube API
     $("#videos-view").empty();
     $("#displayRecipe").empty();
@@ -22,6 +101,14 @@ var topics =[];
 
     q = $(".input").val();
 
+    searchHistory.push(keyword);
+    
+    var userData = {history: searchHistory};
+    var newHistory = {};
+    newHistory['/users/' + userSep[0]] = userData
+    console.log(userSep[0]);
+    firebase.database().ref().update(newHistory);
+
     $.ajax({
       url: url,
       method: "GET"
@@ -29,6 +116,7 @@ var topics =[];
 
     var nextPageToken = data.nextPageToken;
     var prevPageToken = data.prevPageToken;
+    console.log(data)
 
     console.log("Response length: " + data.items.length)
     
@@ -82,7 +170,6 @@ for (i = 0; i < ingredientArray.length; i++){
     recipeIngredients = recipeIngredients.replace(/["]+/g,' ');
     newDiv.append(recipeIngredients + "<br>");
     
-
 }
 
 console.log(recipeIngredients);
@@ -202,17 +289,15 @@ function showVideos(item) {
     var publishedAt = item.snippet.publishedAt;
 
     var result = '<li>' + 
-    '<div class="list-left">' + 
-    // '<img ="'+thumb+'">' +
-    '<iframe> width="560" height="315" src="http://www.youtube.com/embed/'+videoId+'" frameborder="0" allow="autoplay;encrypted-media" allowfullscreen></iframe>'+
+    '<div>' + 
+    '<a data-fancybox data-type="iframe" href="http://www.youtube.com/embed/'+videoId+'"><img src="'+thumb+'"></a>' +
     '</div>' +
-    '<div class="list-right">' +
+    '<div>' +
     '<h3><a data-fancybox data-type="iframe" href="http://www.youtube.com/embed/'+videoId+'">'+title+'</a></h3>' +
     '<small>By <span class="cTitle">'+channelTitle+'</span> on '+publishedAt+'</small>' +
     '<p>'+description+'</p>' + 
     '</div>' +
-    '</li>' + 
-    '<div class="clearfix"></div>' + 
+    '</li>'
     '';
 
     return result;
@@ -237,6 +322,7 @@ $(".input").keypress(function(event) {
     event.preventDefault();
     // This line grabs the input from the textbox
     keyword = $("#keyword-input").val().trim();
+    keyword = keyword + " recipe";
     topics.push(keyword)
     // Initalizes function to immediately display the added button
     doAjaxCall();

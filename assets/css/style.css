@@ -14,6 +14,11 @@ h3 {
 	margin: 0;
 }
 
+
 #heroImage {
 	background-image: url("/Users/ShaneDrosi/shigging_project/assets/images/formattedpineapples.jpg");
+}
+
+#videos-view {
+	list-style: none;
 }
