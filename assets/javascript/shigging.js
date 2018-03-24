@@ -1,25 +1,26 @@
-var keyword ="";
-var searchResults;
-var ingredientArray = [];
-var topics =[];
+ // Initialize Firebase
+ var config = {
+    apiKey: "AIzaSyC_HsCc08nxb6JP0CyGZq3CxIJrhKsbplU",
+    authDomain: "project-monarch-e3503.firebaseapp.com",
+    databaseURL: "https://project-monarch-e3503.firebaseio.com",
+    projectId: "project-monarch-e3503",
+    storageBucket: "project-monarch-e3503.appspot.com",
+    messagingSenderId: "181317180117"
+  };
+  firebase.initializeApp(config);
 
-// Initialize Firebase
-var config = {
-apiKey: "AIzaSyC_HsCc08nxb6JP0CyGZq3CxIJrhKsbplU",
-authDomain: "project-monarch-e3503.firebaseapp.com",
-databaseURL: "https://project-monarch-e3503.firebaseio.com",
-projectId: "project-monarch-e3503",
-storageBucket: "project-monarch-e3503.appspot.com",
-messagingSenderId: "181317180117"
-};
-firebase.initializeApp(config);
-
-var ref = new Firebase ("https://project-monarch-e3503.firebaseio.com/")
 var database = firebase.database();
 var userRef = database.ref();
 var newDataPoint = "";
 var user = "";
 var password = "";
+var keyword ="";
+var searchResults;
+var ingredientArray = [];
+var topics =[];
+var searchHistory=[];
+
+//   Get elements
 
 const txtEmail = document.getElementById('txtEmail');
 const txtPassword = document.getElementById('txtPassword');
@@ -55,31 +56,20 @@ btnLogout.addEventListener('click', e => {
     firebase.auth().signOut();
 });
 
-// function writeUserData(email, password) {
-//     var userSep = email.split("@");
-//     firebase.database().ref('users/' + userSep[0]).set({
-//         password: password
-//     })
-// }
 
 // Add a realtime listener
 firebase.auth().onAuthStateChanged(firebaseUser => {
-    
-    ref.onAuth(function(authData) {
     if (firebaseUser) {
-        ref.child("users").child(authData.uid).set({
-            provider: "some provider",
-            name: getName(authData)
+        console.log(firebaseUser);
+        btnLogout.classList.remove('hide');
+        user = $("#txtEmail").val();
+        password = $("#txtPassword").val();
+        var userSep = user.split("@");
+        firebase.database().ref().child("users");
+        firebase.database().ref('users/' + userSep[0]).set({
+            password: password
         });
-        // console.log(firebaseUser);
-        // btnLogout.classList.remove('hide');
-        // user = $("#txtEmail").val();
-        // password = $("#txtPassword").val();
 
-        // var userSep = user.split("@");
-        // firebase.database().ref('users/' + userSep[0]).set({
-        //     password: password
-        // });
     }
 
     else {
@@ -88,9 +78,11 @@ firebase.auth().onAuthStateChanged(firebaseUser => {
     }
 });
 
-});
+function doAjaxCall() {
 
-  function doAjaxCall() {
+    // Sends data to database
+    
+
     // Handles call to Youtube API
     $("#videos-view").empty();
     $("#displayRecipe").empty();
@@ -107,6 +99,13 @@ firebase.auth().onAuthStateChanged(firebaseUser => {
     console.log(url);
 
     q = $(".input").val();
+
+    searchHistory.push(keyword);
+    
+    var userData = {history: searchHistory};
+    var updates = {};
+    updates['/users/' + user] = userData
+    firebase.database().ref().update(updates)
 
     $.ajax({
       url: url,
@@ -169,7 +168,6 @@ for (i = 0; i < ingredientArray.length; i++){
     recipeIngredients = recipeIngredients.replace(/["]+/g,' ');
     newDiv.append(recipeIngredients + "<br>");
     
-
 }
 
 console.log(recipeIngredients);
