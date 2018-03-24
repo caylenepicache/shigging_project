@@ -67,10 +67,13 @@ firebase.auth().onAuthStateChanged(firebaseUser => {
         btnLogout.classList.remove('hide');
         user = $("#txtEmail").val();
         password = $("#txtPassword").val();
+        search = $(".input").val();
         userSep = user.split("@");
         firebase.database().ref().child("users");
         firebase.database().ref('users/' + userSep[0]).push({
-            password: password
+            password: password,
+            user: user,
+            search: search
         });
 
     }
