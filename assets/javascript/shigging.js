@@ -80,6 +80,7 @@ firebase.auth().onAuthStateChanged(firebaseUser => {
         search = $(".input").val();
         userSep = user.split("@");
         //userUID = firebaseUser.ka.uid;
+
         database.ref('/users/' + userUID).once('value').then(function(snap) {console.log(snap.val().history)
             searchHistory= snap.val().history;
         
@@ -90,14 +91,15 @@ firebase.auth().onAuthStateChanged(firebaseUser => {
             userObj.history = searchHistory;
             database.ref('/users/' + snap.key).update(userObj)
 
-        });
+        })
 
-    }
+}
 
     else {
         console.log('not logged in')
         btnLogout.classList.add('hide');
     }
+
 });
 
 
@@ -236,6 +238,7 @@ function doAjaxCall() {
     searchHistory.push(keyword);
     
     var userData = {history: searchHistory};
+    console.log(userData);
     var newHistory = {};
     newHistory['/users/' + userSep[0]] = userData
     console.log(userSep[0]);
