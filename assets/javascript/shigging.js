@@ -18,14 +18,10 @@ var keyword ="";
 var searchResults;
 var ingredientArray = [];
 var topics =[];
-var userUID = firebaseUser.ka.uid;
 var searchHistory;
 
 
-database.ref('/users/' + userUID).once('value').then(function(snap) {console.log(snap.val().history)
-    searchHistory= snap.val().history;
 
-})
 
 
 var userSep = [];
@@ -80,6 +76,11 @@ firebase.auth().onAuthStateChanged(firebaseUser => {
         password = $("#txtPassword").val();
         search = $(".input").val();
         userSep = user.split("@");
+        var userUID = firebaseUser.ka.uid;
+        database.ref('/users/' + userUID).once('value').then(function(snap) {console.log(snap.val().history)
+            searchHistory= snap.val().history;
+        
+        })
 
         database.ref('/users/' + userSep[0]).once('value').then(function(snap) {
             let userObj = snap.val();
