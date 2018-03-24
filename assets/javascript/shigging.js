@@ -19,11 +19,15 @@ var searchResults;
 var ingredientArray = [];
 var topics =[];
 var userUID = firebaseUser.ka.uid;
+var searchHistory;
 
-database.ref('/users/' + userUID).once('value').then(function(snap) {console.log(snap.val().history)})
+
+database.ref('/users/' + userUID).once('value').then(function(snap) {console.log(snap.val().history)
+    searchHistory= snap.val().history;
+
+})
 
 
-var searchHistory= snap.val().history;
 var userSep = [];
 
 
