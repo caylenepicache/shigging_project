@@ -70,7 +70,7 @@ firebase.auth().onAuthStateChanged(firebaseUser => {
         search = $(".input").val();
         userSep = user.split("@");
 
-        database.ref('/users/' + uid).once('value').then(function(snap) {
+        database.ref('/users/' + userSep[0]).once('value').then(function(snap) {
             let userObj = snap.val();
             userObj.history = searchHistory;
             database.ref('/users/' + snap.key).update(userObj)
