@@ -159,6 +159,7 @@ function doAjaxButton() {
     });
     var url = "https://www.googleapis.com/youtube/v3/search?" + params;
     console.log(url);
+    q = thisDataButton;
 
     $.ajax({
       url: url,
