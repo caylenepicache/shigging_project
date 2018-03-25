@@ -343,8 +343,9 @@ function makeButtons() {
 
 
     console.log(searchHistory);
+    console.log(searchHistory.length);
 
-    if (searchHistory == undefined){
+    if (searchHistory === undefined){
         return;
     }
 
