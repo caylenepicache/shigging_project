@@ -82,6 +82,7 @@ firebase.auth().onAuthStateChanged(firebaseUser => {
         user = $("#txtEmail").val();
         password = $("#txtPassword").val();
         search = $(".input").val();
+        //userSep is the username portion of the email
         userSep = user.split("@");
         //userUID = firebaseUser.ka.uid;
 
@@ -251,7 +252,8 @@ function doAjaxCall() {
     console.log(userData.history);
 
     var newHistory = {};
-    newHistory['/users/' + userSep[0]] = userData
+    newHistory['/users/' + userSep[0]] = userData;
+    console.log(newHistory);
     console.log(userSep[0]);
     firebase.database().ref().update(newHistory);
 
