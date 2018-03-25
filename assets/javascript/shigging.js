@@ -61,6 +61,7 @@ btnLogout.addEventListener('click', e => {
     console.log("User Logged Out");
     firebase.auth().signOut();
     userSep = [];
+    searchHistory = [];
 
 });
 
