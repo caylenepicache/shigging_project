@@ -142,6 +142,7 @@ function doAjaxButton() {
     searchHistory.push(keyword);
     
     var userData = {history: searchHistory};
+
     
     var newUserKey = firebase.database().ref().child().push();
     var newHistory = {};
@@ -250,8 +251,11 @@ function doAjaxCall() {
     searchHistory.push(keyword);
     
     var userData = {history: searchHistory};
+    console.log(searchHistory);
     console.log(userData);
     console.log(userData.history);
+
+//every refresh duplicates data 
 
     var newHistory = {};
     newHistory['/users/' + userSep[0]] = userData;
@@ -337,6 +341,8 @@ function makeButtons() {
     var historyRef = firebase.database().ref();
     historyRef.on("child_added",function(snapshot){
 
+
+    console.log(searchHistory);
 
     for (var i = 0; i < snapshot.val().history.length; i++) {
         var a = $('<a>' + snapshot.val().history[i] + '</a>');
