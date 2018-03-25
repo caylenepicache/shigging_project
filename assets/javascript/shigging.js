@@ -41,7 +41,7 @@ btnLogin.addEventListener('click', e => {
     // Sign in
     const promise = auth.signInWithEmailAndPassword(email, pass);
     console.log("User logged in");
-    $("btnLogin").hide();
+    $("#btnLogin").hide();
 
     promise.catch(e => console.log(e.message));
 });
