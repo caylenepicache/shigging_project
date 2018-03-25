@@ -44,7 +44,7 @@ btnLogin.addEventListener('click', e => {
 });
 
 // Add signup event
-btnSignUp.addEventListener('click', e => {
+btnSignUp,addEventListener('click', e => {
     // Get email and pass
     const email = txtEmail.value;
     const pass = txtPassword.value;
