@@ -31,7 +31,6 @@ const btnLogin = document.getElementById('btnLogin');
 const btnSignUp = document.getElementById('btnSignUp');
 const btnLogout = document.getElementById('btnLogout');
 
-$("#btnLogout").hide();
 
 // Add login event
 btnLogin.addEventListener('click', e => {
@@ -46,7 +45,6 @@ btnLogin.addEventListener('click', e => {
     console.log("User logged in");
     $("#btnLogin").hide();
     $("#btnSignUp").hide();
-    $("#btnLogin").on("click", getElementById('#txtEmail').value = '');
 
 
     promise.catch(e => console.log(e.message));
@@ -69,7 +67,7 @@ btnLogout.addEventListener('click', e => {
     console.log("User Logged Out");
     $("#btnLogin").show();
     $("#btnSignUp").show();
-    $("#btnLogout").show();
+    $("#btnLogout").hide();
     firebase.auth().signOut();
     userSep = [];
     searchHistory = [];
@@ -82,9 +80,9 @@ firebase.auth().onAuthStateChanged(firebaseUser => {
 
     console.log(firebaseUser);
     //console.log(firebaseUser.ka);
-    console.log(firebaseUser.uid);
     //console.log(firebaseUser.uid);
-    userUID = firebaseUser.uid;
+    //console.log(firebaseUser.uid);
+    //userUID = firebaseUser.uid;
 
     if (firebaseUser) {
         //console.log(firebaseUser);
