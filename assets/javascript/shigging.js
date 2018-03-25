@@ -1,5 +1,5 @@
  // Initialize Firebase
- var config = {
+var config = {
     apiKey: "AIzaSyC_HsCc08nxb6JP0CyGZq3CxIJrhKsbplU",
     authDomain: "project-monarch-e3503.firebaseapp.com",
     databaseURL: "https://project-monarch-e3503.firebaseio.com",
@@ -11,7 +11,6 @@
 
 var database = firebase.database();
 var userRef = database.ref();
-var newDataPoint = "";
 var user = "";
 var password = "";
 var keyword ="";
@@ -19,12 +18,10 @@ var searchResults;
 var ingredientArray = [];
 var topics =[];
 var searchHistory= [];
-var userUID;
 var userSep = [];
 
 
 //   Get elements
-
 const txtEmail = document.getElementById('txtEmail');
 const txtPassword = document.getElementById('txtPassword');
 const btnLogin = document.getElementById('btnLogin');
@@ -60,49 +57,64 @@ btnSignUp.addEventListener('click', e => {
 btnLogout.addEventListener('click', e => {
     console.log("User Logged Out");
     firebase.auth().signOut();
+    $(".dropdown-content").empty();
     userSep = [];
     searchHistory = [];
 
 });
 
+$(window).bind('beforeunload',function(){
+    console.log("Automatic sign out")
+    firebase.auth().signOut();
+ });
 
-// Add a realtime listener
+
+// Add a realtime listener 
 firebase.auth().onAuthStateChanged(firebaseUser => {
 
-    console.log(firebaseUser);
-    //console.log(firebaseUser.ka);
-    console.log(firebaseUser.uid);
-    //console.log(firebaseUser.uid);
-    userUID = firebaseUser.uid;
-
+    // If a user exists in the firebase database
     if (firebaseUser) {
-        //console.log(firebaseUser);
-        //console.log(firebaseUser.ka.uid);
-        // var userUID = firebaseUser.ka.uid;
+        // When user authenticates with a user, it will display the "logout" button
         btnLogout.classList.remove('hide');
+        // Pulls string from the input field
         user = $("#txtEmail").val();
-        password = $("#txtPassword").val();
-        search = $(".input").val();
         //userSep is the username portion of the email
         userSep = user.split("@");
-        //userUID = firebaseUser.ka.uid;
 
         console.log(searchHistory);
 
+        var ref = database.ref('/users/' + userSep[0]);
+        ref.once("value")
+        .then(function(snapshot) {
+            if(snapshot.exists() === true) {
+                console.log("Thinks user exists")
+                let userObj = snapshot.val();
+                searchHistory = snapshot.val().history;
+                console.log(searchHistory)
+                userObj.history = searchHistory;
+                // Creates search history drop down buttons when user authenticates and user exists
+                for (var i = 0; i < searchHistory.length; i++) {
+                    var a = $('<a>' + searchHistory[i] + '</a>');
+                    console.log(searchHistory[i]);
+                    a.addClass("dropdown-item");
+                    a.attr("data-name", searchHistory[i]);
+                    console.log(searchHistory[i]);
+                    a.text(searchHistory[i]);
+                    $(".dropdown-content").append(a);
+                }
+                database.ref('/users/' + snapshot.key).update(userObj)
 
-        database.ref('/users/' + userSep[0]).once('value').then(function(snap) {           console.log(snap);
-            //console.log(snap.val().userData.history);
-            console.log(snap.val().history);
-            searchHistory = snap.val().history;
-        
-        })
 
-        database.ref('/users/' + userSep[0]).once('value').then(function(snap) {
-            let userObj = snap.val();
-            userObj.history = searchHistory;
-            database.ref('/users/' + snap.key).update(userObj)
+            }
 
-        })
+            else {
+                console.log("Thinks user does not exist")
+                let userObj = snapshot.val();
+                // Simply updates database with data that was already found there.
+                database.ref('/users/' + snapshot.key).update(userObj)
+
+            }
+        });
 
 }
 
@@ -116,10 +128,9 @@ firebase.auth().onAuthStateChanged(firebaseUser => {
 
 function doAjaxButton() {
 
-    console.log("im here");
-
     // Sends data to database
     var thisDataButton = $(this).attr("data-name");
+
     console.log(thisDataButton);
 
     // Handles call to Youtube API
@@ -138,21 +149,6 @@ function doAjaxButton() {
     var url = "https://www.googleapis.com/youtube/v3/search?" + params;
     console.log(url);
 
-    q = $(".input").val();
-
-    searchHistory.push(keyword);
-    
-    var userData = {history: searchHistory};
-
-    
-    var newUserKey = firebase.database().ref().child().push();
-    var newHistory = {};
-    newHistory['/users/' + userSep[0] + '/' + newUserKey ] = userData
-    console.log(userSep[0]);
-    console.log("^^^this is line 149");
-    firebase.database().ref().update(newHistory);
-    console.log(newHistory);
-
     $.ajax({
       url: url,
       method: "GET"
@@ -160,10 +156,7 @@ function doAjaxButton() {
 
     var nextPageToken = data.nextPageToken;
     var prevPageToken = data.prevPageToken;
-    console.log(data)
-
-    console.log("Response length: " + data.items.length)
-    
+   
     $.each(data.items, function(i, item){ 
 
         var result = showVideos(item);
@@ -176,6 +169,7 @@ function doAjaxButton() {
     $("#buttons").append(buttons);
 
 });
+
 // Handles ajax call to recipe API
 $("#displayRecipe").empty();
 
@@ -220,7 +214,9 @@ console.log(recipeIngredients);
 $("#displayRecipe").append(newDiv); 
 
 });
-
+$("#txtEmail").val("");
+$("#txtPassword").val("");
+$("#keyword-input").val("");
 makeButtons();
 };
 
@@ -228,9 +224,6 @@ makeButtons();
 
 
 function doAjaxCall() {
-
-    // Sends data to database
-    
 
     // Handles call to Youtube API
     $("#videos-view").empty();
@@ -332,7 +325,9 @@ for (i = 0; i < ingredientArray.length; i++){
 $("#displayRecipe").append(newDiv); 
 
 });
-
+$("#txtEmail").val("");
+$("#txtPassword").val("");
+$("#keyword-input").val("");
 makeButtons();
 };
 
@@ -362,9 +357,6 @@ function makeButtons() {
     }
 })
 }
-
-    $(document).on("click", ".dropdown-item", doAjaxButton);
-
 
 function showPrevPage() {
     var token = $("#prev-button").data('token');
@@ -504,4 +496,5 @@ $(".input").keypress(function(event) {
     }
   });
 
-//$(document).on("click", ".image-button", doAjaxCall);
+// Event handler for when the dynamically generated dropdown arrow menu options are clicked.
+$(document).on("click", ".dropdown-item", doAjaxButton);
