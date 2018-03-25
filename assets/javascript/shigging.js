@@ -45,6 +45,8 @@ btnLogin.addEventListener('click', e => {
     console.log("User logged in");
     $("#btnLogin").hide();
     $("#btnSignUp").hide();
+    $("#btnLogout").show();
+
 
 
     promise.catch(e => console.log(e.message));
@@ -78,9 +80,7 @@ btnLogout.addEventListener('click', e => {
 // Add a realtime listener
 firebase.auth().onAuthStateChanged(firebaseUser => {
 
-    console.log(firebaseUser);
-    //console.log(firebaseUser.ka);
-    //console.log(firebaseUser.uid);
+    //console.log(firebaseUser);
     //console.log(firebaseUser.uid);
     //userUID = firebaseUser.uid;
 
