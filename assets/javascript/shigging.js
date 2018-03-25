@@ -31,7 +31,7 @@ const btnLogin = document.getElementById('btnLogin');
 const btnSignUp = document.getElementById('btnSignUp');
 const btnLogout = document.getElementById('btnLogout');
 
-
+$("#btnLogout").hide();
 // Add login event
 btnLogin.addEventListener('click', e => {
     // Get email and pass
