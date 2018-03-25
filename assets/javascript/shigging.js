@@ -44,15 +44,15 @@ btnLogin.addEventListener('click', e => {
 });
 
 // Add signup event
-btnSignUp,addEventListener('click', e => {
+btnSignUp.addEventListener('click', e => {
     // Get email and pass
     const email = txtEmail.value;
     const pass = txtPassword.value;
     const auth = firebase.auth();
 
-    // Sign in
-    const promise = auth.createUserWithEmailAndPassword(email, pass);
-    promise.catch(e => console.log(e.message));
+    // Create
+    const promiseCreate = auth.createUserWithEmailAndPassword(email, pass);
+    promiseCreate.catch(e => console.log(e.message));
 });
 
 btnLogout.addEventListener('click', e => {
