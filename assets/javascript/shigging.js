@@ -9,6 +9,7 @@
   };
   firebase.initializeApp(config);
 
+//INITIALIZE GLOBAL VARIABLES
 var database = firebase.database();
 var userRef = database.ref();
 var newDataPoint = "";
@@ -23,8 +24,7 @@ var userUID;
 var userSep = [];
 
 
-//   Get elements
-
+//   Get elements from document using its ID
 const txtEmail = document.getElementById('txtEmail');
 const txtPassword = document.getElementById('txtPassword');
 const btnLogin = document.getElementById('btnLogin');
@@ -51,18 +51,18 @@ btnSignUp.addEventListener('click', e => {
     const pass = txtPassword.value;
     const auth = firebase.auth();
 
-    // Create
+    // Create user
     const promise = auth.createUserWithEmailAndPassword(email, pass);
     console.log("User Signed Up");
     promise.catch(e => console.log(e.message));
 });
 
+//add Logout event
 btnLogout.addEventListener('click', e => {
     console.log("User Logged Out");
     firebase.auth().signOut();
     userSep = [];
     searchHistory = [];
-
 });
 
 
@@ -77,8 +77,6 @@ firebase.auth().onAuthStateChanged(firebaseUser => {
 
     if (firebaseUser) {
         //console.log(firebaseUser);
-        //console.log(firebaseUser.ka.uid);
-        // var userUID = firebaseUser.ka.uid;
         btnLogout.classList.remove('hide');
         user = $("#txtEmail").val();
         password = $("#txtPassword").val();
@@ -90,7 +88,7 @@ firebase.auth().onAuthStateChanged(firebaseUser => {
         console.log(searchHistory);
 
 
-        database.ref('/users/' + userSep[0]).once('value').then(function(snap) {           console.log(snap);
+        database.ref('/users/' + userSep[0]).once('value').then(function(snap) {console.log(snap);
             //console.log(snap.val().userData.history);
             console.log(snap.val().history);
             searchHistory = snap.val().history;
@@ -113,7 +111,8 @@ firebase.auth().onAuthStateChanged(firebaseUser => {
 
 });
 
-
+//THIS IS FOR THE DROPDOWN MENU (remember we have to call the api's 2x)
+//This is probably where we need to fix the buttons to call these apis!!!!
 function doAjaxButton() {
 
     console.log("im here");
@@ -138,21 +137,24 @@ function doAjaxButton() {
     var url = "https://www.googleapis.com/youtube/v3/search?" + params;
     console.log(url);
 
+    //this is the input from the search bar
     q = $(".input").val();
 
     searchHistory.push(keyword);
     
     var userData = {history: searchHistory};
-
     
     var newUserKey = firebase.database().ref().child().push();
     var newHistory = {};
     newHistory['/users/' + userSep[0] + '/' + newUserKey ] = userData
     console.log(userSep[0]);
     console.log("^^^this is line 149");
+
+    //updates newHistory.... Might need to get fixed for the refresh???
     firebase.database().ref().update(newHistory);
     console.log(newHistory);
 
+    //AJAX call for Youtube
     $.ajax({
       url: url,
       method: "GET"
@@ -176,9 +178,13 @@ function doAjaxButton() {
     $("#buttons").append(buttons);
 
 });
+
 // Handles ajax call to recipe API
 $("#displayRecipe").empty();
 
+// YUMMLY ----------------------------------------------------------------------
+
+//variables for Yummly 
 var recipeInput = keyword;
 var corsProxy = "https://cors-anywhere.herokuapp.com/";
 var baseURL = "http://api.yummly.com/v1/api/recipes?_app_id=87b4ae84&_app_key=1c317fe13d2c932506f2c1aab86f67b6&q=";
@@ -186,29 +192,32 @@ var queryURL =  corsProxy + baseURL + thisDataButton;
 var corsProxy = "https://cors-anywhere.herokuapp.com/";
 console.log(queryURL);
 
+//AJAX CALL FOR YUMMLY
 $.ajax({
     url: queryURL,
     method: "GET"
 }).then(function(response){
   console.log(response);
 
+  //setting and appending new div
   var newDiv = $("<div>");
   newDiv.addClass("addedDiv");
   $("#displayRecipe").append(newDiv);
   
 
-var recipeTitle = response.matches[0].recipeName;
-console.log(recipeTitle);
-newDiv.append("<h1>" + recipeTitle + "</h1>");
+    var recipeTitle = response.matches[0].recipeName;
+    console.log(recipeTitle);
+    newDiv.append("<h1>" + recipeTitle + "</h1>");
 
-var ingredientArray = response.matches[0].ingredients;
-console.log(ingredientArray);
+    var ingredientArray = response.matches[0].ingredients;
+    console.log(ingredientArray);
 
-var ingredientTitleString = "Ingredients";
-newDiv.append("<h3>" + ingredientTitleString + "</h3>");
-
+    var ingredientTitleString = "Ingredients";
+    newDiv.append("<h3>" + ingredientTitleString + "</h3>");
+//for loop to go through recipeingredients and append to div
 for (i = 0; i < ingredientArray.length; i++){
     var recipeIngredients = JSON.stringify(response.matches[0].ingredients[i]);
+    //replaces brackets and quotes with spaces
     recipeIngredients = recipeIngredients.replace('[',' ');
     recipeIngredients = recipeIngredients.replace(']',' ');
     recipeIngredients = recipeIngredients.replace(/["]+/g,' ');
@@ -220,18 +229,17 @@ console.log(recipeIngredients);
 $("#displayRecipe").append(newDiv); 
 
 });
-
+//make buttons ?????? do we need this here..... 
 makeButtons();
 };
 
 
 
-
+//the main functionality is to display on the webpage? i assume..... 
 function doAjaxCall() {
 
     // Sends data to database
     
-
     // Handles call to Youtube API
     $("#videos-view").empty();
     $("#displayRecipe").empty();
@@ -256,7 +264,8 @@ function doAjaxCall() {
     console.log(userData);
     console.log(userData.history);
 
-//every refresh duplicates data 
+//every refresh duplicates data !!!
+//how will we fix this.... is it in this function or the previous one....
 
     var newHistory = {};
     newHistory['/users/' + userSep[0]] = userData;
@@ -336,6 +345,8 @@ $("#displayRecipe").append(newDiv);
 makeButtons();
 };
 
+
+//THIS MAKES THE BUTTONS ON THE DROPDOWN MENU! Maybe this is where we need to all the api functions???
 function makeButtons() {
     $(".dropdown-content").empty();
 
@@ -362,10 +373,10 @@ function makeButtons() {
     }
 })
 }
-
+//I think we were trying to do something like that here and that's why we have two functions that are the same.....
     $(document).on("click", ".dropdown-item", doAjaxButton);
 
-
+//previous video button!!!
 function showPrevPage() {
     var token = $("#prev-button").data('token');
     var q = $('#prev-button').data('query');
@@ -410,6 +421,7 @@ function showPrevPage() {
     });
 };
 
+//next video button!!!
 function showNextPage() {
     var token = $("#next-button").data('token');
     var q = $('#next-button').data('query');
@@ -454,6 +466,7 @@ function showNextPage() {
 });
 };
 
+//ta-da we have magic thanks to these button functions
 function showVideos(item) {
     var videoId = item.id.videoId;
     var title = item.snippet.title;
@@ -477,6 +490,7 @@ function showVideos(item) {
     return result;
 }
 
+//passing two arguments of the previous and next page tokens
 function showButtons(prevPageToken, nextPageToken) {
     if (!prevPageToken) {
         var buttonOutput = '<div class="button-container">' +
@@ -490,7 +504,7 @@ function showButtons(prevPageToken, nextPageToken) {
     return buttonOutput;
 }
 
-
+//every time the enter key is pressed, it will grab whatever is in the textbox and it ends with an doAjaxCall
 $(".input").keypress(function(event) {
     if (event.which == 13) {
     event.preventDefault();
@@ -504,4 +518,7 @@ $(".input").keypress(function(event) {
     }
   });
 
+
+
 //$(document).on("click", ".image-button", doAjaxCall);
+//^^^this is commented out because it doesnt really refer to anything like what is .image-button? its nothing..... and the code didnt break when it was commented out
