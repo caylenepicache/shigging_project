@@ -42,6 +42,7 @@ btnLogin.addEventListener('click', e => {
     const promise = auth.signInWithEmailAndPassword(email, pass);
     console.log("User logged in");
     $("#btnLogin").hide();
+    $("#btnSignUp").hide();
 
     promise.catch(e => console.log(e.message));
 });
@@ -61,6 +62,9 @@ btnSignUp.addEventListener('click', e => {
 
 btnLogout.addEventListener('click', e => {
     console.log("User Logged Out");
+    $("#btnLogin").show();
+    $("#btnSignUp").show();
+    $("#btnLogout").show();
     firebase.auth().signOut();
     userSep = [];
     searchHistory = [];
