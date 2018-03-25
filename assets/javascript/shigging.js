@@ -80,10 +80,8 @@ $(window).bind('beforeunload',function(){
  });
 
 
-
 // Add a realtime listener 
 firebase.auth().onAuthStateChanged(firebaseUser => {
-
 
     // If a user exists in the firebase database
     if (firebaseUser) {
