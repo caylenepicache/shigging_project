@@ -28,6 +28,7 @@ const btnLogin = document.getElementById('btnLogin');
 const btnSignUp = document.getElementById('btnSignUp');
 const btnLogout = document.getElementById('btnLogout');
 
+$("#btnLogout").hide();
 // Add login event
 btnLogin.addEventListener('click', e => {
     // Get email and pass
@@ -35,9 +36,16 @@ btnLogin.addEventListener('click', e => {
     const pass = txtPassword.value;
     const auth = firebase.auth();
 
+
     // Sign in
     const promise = auth.signInWithEmailAndPassword(email, pass);
     console.log("User logged in");
+    $("#btnLogin").hide();
+    $("#btnSignUp").hide();
+    $("#btnLogout").show();
+
+
+
     promise.catch(e => console.log(e.message));
 });
 
@@ -56,6 +64,9 @@ btnSignUp.addEventListener('click', e => {
 
 btnLogout.addEventListener('click', e => {
     console.log("User Logged Out");
+    $("#btnLogin").show();
+    $("#btnSignUp").show();
+    $("#btnLogout").hide();
     firebase.auth().signOut();
     $(".dropdown-content").empty();
     userSep = [];
@@ -120,7 +131,7 @@ firebase.auth().onAuthStateChanged(firebaseUser => {
 
     else {
         console.log('not logged in')
-        btnLogout.classList.add('hide');
+        //btnLogout.classList.add('hide');
     }
 
 });
