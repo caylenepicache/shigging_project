@@ -344,13 +344,19 @@ function makeButtons() {
 
     console.log(searchHistory);
 
-    for (var i = 0; i < snapshot.val().history.length; i++) {
-        var a = $('<a>' + snapshot.val().history[i] + '</a>');
-            a.addClass("dropdown-item");
-            a.attr("data-name", snapshot.val().userSep[0].history[i]);
-            console.log(snapshot.val().userSep[0].history[i]);
-            a.text(snapshot.val().userSep[0].history[i]);
-            $(".dropdown-content").append(a);
+    if (searchHistory == undefined){
+        return;
+    }
+
+    for (var i = 0; i < searchHistory.length; i++) {
+        var a = $('<a>' + searchHistory[i] + '</a>');
+        console.log(searchHistory[i]);
+
+        a.addClass("dropdown-item");
+        a.attr("data-name", searchHistory[i]);
+        console.log(searchHistory[i]);
+        a.text(searchHistory[i]);
+        $(".dropdown-content").append(a);
     }
 })
 }
