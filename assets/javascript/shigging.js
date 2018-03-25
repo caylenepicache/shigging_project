@@ -20,11 +20,6 @@ var ingredientArray = [];
 var topics =[];
 var searchHistory= [];
 var userUID;
-
-
-
-
-
 var userSep = [];
 
 
@@ -45,41 +40,60 @@ btnLogin.addEventListener('click', e => {
 
     // Sign in
     const promise = auth.signInWithEmailAndPassword(email, pass);
+    console.log("User logged in");
     promise.catch(e => console.log(e.message));
 });
 
 // Add signup event
-btnSignUp,addEventListener('click', e => {
+btnSignUp.addEventListener('click', e => {
     // Get email and pass
     const email = txtEmail.value;
     const pass = txtPassword.value;
     const auth = firebase.auth();
 
-    // Sign in
+    // Create
     const promise = auth.createUserWithEmailAndPassword(email, pass);
+    console.log("User Signed Up");
     promise.catch(e => console.log(e.message));
 });
 
 btnLogout.addEventListener('click', e => {
+    console.log("User Logged Out");
     firebase.auth().signOut();
     userSep = [];
+    searchHistory = [];
 
 });
 
 
 // Add a realtime listener
 firebase.auth().onAuthStateChanged(firebaseUser => {
+
+    console.log(firebaseUser);
+    //console.log(firebaseUser.ka);
+    console.log(firebaseUser.uid);
+    //console.log(firebaseUser.uid);
+    userUID = firebaseUser.uid;
+
     if (firebaseUser) {
-        // console.log(firebaseUser.ka.uid);
+        //console.log(firebaseUser);
+        //console.log(firebaseUser.ka.uid);
         // var userUID = firebaseUser.ka.uid;
         btnLogout.classList.remove('hide');
         user = $("#txtEmail").val();
         password = $("#txtPassword").val();
         search = $(".input").val();
+        //userSep is the username portion of the email
         userSep = user.split("@");
-        userUID = firebaseUser.ka.uid;
-        database.ref('/users/' + userUID).once('value').then(function(snap) {console.log(snap.val().history)
-            searchHistory= snap.val().history;
+        //userUID = firebaseUser.ka.uid;
+
+        console.log(searchHistory);
+
+
+        database.ref('/users/' + userSep[0]).once('value').then(function(snap) {           console.log(snap);
+            //console.log(snap.val().userData.history);
+            console.log(snap.val().history);
+            searchHistory = snap.val().history;
         
         })
 
@@ -88,14 +102,15 @@ firebase.auth().onAuthStateChanged(firebaseUser => {
             userObj.history = searchHistory;
             database.ref('/users/' + snap.key).update(userObj)
 
-        });
+        })
 
-    }
+}
 
     else {
         console.log('not logged in')
         btnLogout.classList.add('hide');
     }
+
 });
 
 
@@ -128,12 +143,15 @@ function doAjaxButton() {
     searchHistory.push(keyword);
     
     var userData = {history: searchHistory};
+
     
     var newUserKey = firebase.database().ref().child().push();
     var newHistory = {};
     newHistory['/users/' + userSep[0] + '/' + newUserKey ] = userData
     console.log(userSep[0]);
+    console.log("^^^this is line 149");
     firebase.database().ref().update(newHistory);
+    console.log(newHistory);
 
     $.ajax({
       url: url,
@@ -234,8 +252,16 @@ function doAjaxCall() {
     searchHistory.push(keyword);
     
     var userData = {history: searchHistory};
+    console.log(searchHistory);
+    console.log(userData);
+    console.log(userData.history);
+
+//every refresh duplicates data 
+
     var newHistory = {};
-    newHistory['/users/' + userSep[0]] = userData
+    newHistory['/users/' + userSep[0]] = userData;
+    console.log(newHistory);
+    console.log("^^^this is line 258");
     console.log(userSep[0]);
     firebase.database().ref().update(newHistory);
 
@@ -276,7 +302,7 @@ $.ajax({
     url: queryURL,
     method: "GET"
 }).then(function(response){
-  console.log(response);
+  //console.log(response);
 
   var newDiv = $("<div>");
   newDiv.addClass("addedDiv");
@@ -284,11 +310,11 @@ $.ajax({
   
 
 var recipeTitle = response.matches[0].recipeName;
-console.log(recipeTitle);
+//console.log(recipeTitle);
 newDiv.append("<h1>" + recipeTitle + "</h1>");
 
 var ingredientArray = response.matches[0].ingredients;
-console.log(ingredientArray);
+//console.log(ingredientArray);
 
 var ingredientTitleString = "Ingredients";
 newDiv.append("<h3>" + ingredientTitleString + "</h3>");
@@ -302,7 +328,7 @@ for (i = 0; i < ingredientArray.length; i++){
     
 }
 
-console.log(recipeIngredients);
+//console.log(recipeIngredients);
 $("#displayRecipe").append(newDiv); 
 
 });
@@ -317,13 +343,22 @@ function makeButtons() {
     historyRef.on("child_added",function(snapshot){
 
 
-    for (var i = 0; i < snapshot.val().history.length; i++) {
-        var a = $('<a>' + snapshot.val().history[i] + '</a>');
-            a.addClass("dropdown-item");
-            a.attr("data-name", snapshot.val().userSep[0].history[i]);
-            console.log(snapshot.val().userSep[0].history[i]);
-            a.text(snapshot.val().userSep[0].history[i]);
-            $(".dropdown-content").append(a);
+    console.log(searchHistory);
+    console.log(searchHistory.length);
+
+    if (searchHistory === undefined){
+        return;
+    }
+
+    for (var i = 0; i < searchHistory.length; i++) {
+        var a = $('<a>' + searchHistory[i] + '</a>');
+        console.log(searchHistory[i]);
+
+        a.addClass("dropdown-item");
+        a.attr("data-name", searchHistory[i]);
+        console.log(searchHistory[i]);
+        a.text(searchHistory[i]);
+        $(".dropdown-content").append(a);
     }
 })
 }
@@ -469,4 +504,4 @@ $(".input").keypress(function(event) {
     }
   });
 
-$(document).on("click", ".image-button", doAjaxCall);
+//$(document).on("click", ".image-button", doAjaxCall);
