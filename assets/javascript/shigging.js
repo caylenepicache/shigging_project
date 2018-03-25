@@ -147,7 +147,9 @@ function doAjaxButton() {
     var newHistory = {};
     newHistory['/users/' + userSep[0] + '/' + newUserKey ] = userData
     console.log(userSep[0]);
+    console.log("^^^this is line 149");
     firebase.database().ref().update(newHistory);
+    console.log(newHistory);
 
     $.ajax({
       url: url,
@@ -254,6 +256,7 @@ function doAjaxCall() {
     var newHistory = {};
     newHistory['/users/' + userSep[0]] = userData;
     console.log(newHistory);
+    console.log("^^^this is line 258");
     console.log(userSep[0]);
     firebase.database().ref().update(newHistory);
 
