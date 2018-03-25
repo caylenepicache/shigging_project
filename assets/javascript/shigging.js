@@ -87,13 +87,11 @@ firebase.auth().onAuthStateChanged(firebaseUser => {
 
         console.log(searchHistory);
 
-        var debug = database.ref('/users/' + userUID);
-        var debug2 = debug.once('value');
 
         database.ref('/users/' + userUID).once('value').then(function(snap) {           console.log(snap);
             //console.log(snap.val().userData.history);
             console.log(snap.val().history);
-            searchHistory= snap.val().history;
+            searchHistory = snap.val().history;
         
         })
 
@@ -251,6 +249,7 @@ function doAjaxCall() {
     var userData = {history: searchHistory};
     console.log(userData);
     console.log(userData.history);
+
     var newHistory = {};
     newHistory['/users/' + userSep[0]] = userData
     console.log(userSep[0]);
@@ -301,7 +300,7 @@ $.ajax({
   
 
 var recipeTitle = response.matches[0].recipeName;
-console.log(recipeTitle);
+//console.log(recipeTitle);
 newDiv.append("<h1>" + recipeTitle + "</h1>");
 
 var ingredientArray = response.matches[0].ingredients;
@@ -486,4 +485,4 @@ $(".input").keypress(function(event) {
     }
   });
 
-$(document).on("click", ".image-button", doAjaxCall);
+//$(document).on("click", ".image-button", doAjaxCall);
