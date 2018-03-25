@@ -40,6 +40,7 @@ btnLogin.addEventListener('click', e => {
 
     // Sign in
     const promise = auth.signInWithEmailAndPassword(email, pass);
+    console.log("User logged in");
     promise.catch(e => console.log(e.message));
 });
 
@@ -52,10 +53,12 @@ btnSignUp.addEventListener('click', e => {
 
     // Create
     const promise = auth.createUserWithEmailAndPassword(email, pass);
+    console.log("User Signed Up");
     promise.catch(e => console.log(e.message));
 });
 
 btnLogout.addEventListener('click', e => {
+    console.log("User Logged Out");
     firebase.auth().signOut();
     userSep = [];
 
@@ -290,7 +293,7 @@ $.ajax({
     url: queryURL,
     method: "GET"
 }).then(function(response){
-  console.log(response);
+  //console.log(response);
 
   var newDiv = $("<div>");
   newDiv.addClass("addedDiv");
@@ -302,7 +305,7 @@ console.log(recipeTitle);
 newDiv.append("<h1>" + recipeTitle + "</h1>");
 
 var ingredientArray = response.matches[0].ingredients;
-console.log(ingredientArray);
+//console.log(ingredientArray);
 
 var ingredientTitleString = "Ingredients";
 newDiv.append("<h3>" + ingredientTitleString + "</h3>");
@@ -316,7 +319,7 @@ for (i = 0; i < ingredientArray.length; i++){
     
 }
 
-console.log(recipeIngredients);
+//console.log(recipeIngredients);
 $("#displayRecipe").append(newDiv); 
 
 });
