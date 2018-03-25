@@ -88,13 +88,13 @@ firebase.auth().onAuthStateChanged(firebaseUser => {
         var debug2 = debug.once('value');
 
         database.ref('/users/' + userUID).once('value').then(function(snap) {           console.log(snap);
-            console.log(snap.val.userData.history);
+            console.log(snap.val().userData.history);
             console.log(snap.val().history);
             searchHistory= snap.val().history;
         
         })
 
-        database.ref('/users/' + 8[0]).once('value').then(function(snap) {
+        database.ref('/users/' + userSep[0]).once('value').then(function(snap) {
             let userObj = snap.val();
             userObj.history = searchHistory;
             database.ref('/users/' + snap.key).update(userObj)
