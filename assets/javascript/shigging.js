@@ -9,6 +9,7 @@ var config = {
   };
   firebase.initializeApp(config);
 
+// Global variables used in website
 var database = firebase.database();
 var userRef = database.ref();
 var user = "";
@@ -21,7 +22,7 @@ var searchHistory= [];
 var userSep = [];
 
 
-//   Get elements
+//Gets elements from the different input fields and buttons
 const txtEmail = document.getElementById('txtEmail');
 const txtPassword = document.getElementById('txtPassword');
 const btnLogin = document.getElementById('btnLogin');
@@ -62,6 +63,7 @@ btnSignUp.addEventListener('click', e => {
     promise.catch(e => console.log(e.message));
 });
 
+// When the user logs out, they are no longer writing to the firebase database and the local variables of userSep (username separated at the @ symbol) and searchHistory array are cleared
 btnLogout.addEventListener('click', e => {
     console.log("User Logged Out");
     $("#btnLogin").show();
@@ -74,6 +76,7 @@ btnLogout.addEventListener('click', e => {
 
 });
 
+// Event handler where if the user refreshes the page, the user is automatically signed out of their profile. This is done to combat database duplicating issues.
 $(window).bind('beforeunload',function(){
     console.log("Automatic sign out")
     firebase.auth().signOut();
@@ -93,10 +96,11 @@ firebase.auth().onAuthStateChanged(firebaseUser => {
         userSep = user.split("@");
 
         console.log(searchHistory);
-
+        
         var ref = database.ref('/users/' + userSep[0]);
         ref.once("value")
         .then(function(snapshot) {
+            // If a user authenticates with an existing user, the site will then pull the users previous search history and generate drop down menu buttons
             if(snapshot.exists() === true) {
                 console.log("Thinks user exists")
                 let userObj = snapshot.val();
@@ -117,7 +121,7 @@ firebase.auth().onAuthStateChanged(firebaseUser => {
 
 
             }
-
+            // If a user authenticates with a user that does not exist prior, then the site simply pulls a snapshot of the database data and sends back the same data to the database for data persistence
             else {
                 console.log("Thinks user does not exist")
                 let userObj = snapshot.val();
@@ -131,12 +135,11 @@ firebase.auth().onAuthStateChanged(firebaseUser => {
 
     else {
         console.log('not logged in')
-        //btnLogout.classList.add('hide');
     }
 
 });
 
-
+// This function differs from the "doAjaxCall" function in that it handles the specific ajax call for dropdown menu button options. The search query uses a pre-existing string value that is not found in the search field as in the ajax call to a brand new search
 function doAjaxButton() {
 
     // Sends data to database
@@ -159,6 +162,8 @@ function doAjaxButton() {
     });
     var url = "https://www.googleapis.com/youtube/v3/search?" + params;
     console.log(url);
+
+    // Ajax call to YouTube API to generate appropriate "next video" and "previous video" buttons
     q = thisDataButton;
 
     $.ajax({
@@ -343,6 +348,7 @@ $("#keyword-input").val("");
 makeButtons();
 };
 
+// Function creates dropdown menu buttons that when clicked return previous results from previous search history options
 function makeButtons() {
     $(".dropdown-content").empty();
 
@@ -370,6 +376,7 @@ function makeButtons() {
 })
 }
 
+// Function related to the YouTube API that makes an ajax call to the previous video result
 function showPrevPage() {
     var token = $("#prev-button").data('token');
     var q = $('#prev-button').data('query');
@@ -414,6 +421,7 @@ function showPrevPage() {
     });
 };
 
+// Function related to the YouTube API that makes an ajax call and shows the next page in youtube results
 function showNextPage() {
     var token = $("#next-button").data('token');
     var q = $('#next-button').data('query');
@@ -458,6 +466,7 @@ function showNextPage() {
 });
 };
 
+// Function that builds the html for the YouTube API response.
 function showVideos(item) {
     var videoId = item.id.videoId;
     var title = item.snippet.title;
@@ -481,10 +490,11 @@ function showVideos(item) {
     return result;
 }
 
+// Function that displays "Next Video" and "Previous Video" for user to sort through
 function showButtons(prevPageToken, nextPageToken) {
     if (!prevPageToken) {
         var buttonOutput = '<div class="button-container">' +
-        '<button id="next-button" class="paging-button" data-token="'+nextPageToken+'" data-query="'+q+'" onclick="showNextPage();">Next Page</button></div>';
+        '<button id="next-button" class="paging-button" data-token="'+nextPageToken+'" data-query="'+q+'" onclick="showNextPage();">Next Video</button></div>';
     }
 
     else {
@@ -494,7 +504,7 @@ function showButtons(prevPageToken, nextPageToken) {
     return buttonOutput;
 }
 
-
+// On "enter" key, ajax call will be made based on user input
 $(".input").keypress(function(event) {
     if (event.which == 13) {
     event.preventDefault();
